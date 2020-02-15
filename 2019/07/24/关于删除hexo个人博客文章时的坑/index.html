@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="记录一个删除hexo博文时的坑别在source文件夹为空时执行hexo clean网上许多文章说删除hexo文章时，先在source文件夹下删掉相应的md文件，再执行hexo g。这时很多人会发现文章还是存在，于是又有人说要执行hexo clean。我试了之后发现，千万不要在_post文件夹中没有文件时执行hexo clean！！！这样做会使你的整个博客404！！！  解决方案如果已经执行了而且真">
+<meta name="keywords" content="hexo,个人博客,踩坑记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于删除hexo个人博客文章时的坑">
+<meta property="og:url" content="http://yoursite.com/2019/07/24/关于删除hexo个人博客文章时的坑/index.html">
+<meta property="og:site_name" content="罐头的编程工作室">
+<meta property="og:description" content="记录一个删除hexo博文时的坑别在source文件夹为空时执行hexo clean网上许多文章说删除hexo文章时，先在source文件夹下删掉相应的md文件，再执行hexo g。这时很多人会发现文章还是存在，于是又有人说要执行hexo clean。我试了之后发现，千万不要在_post文件夹中没有文件时执行hexo clean！！！这样做会使你的整个博客404！！！  解决方案如果已经执行了而且真">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-24T03:49:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于删除hexo个人博客文章时的坑">
+<meta name="twitter:description" content="记录一个删除hexo博文时的坑别在source文件夹为空时执行hexo clean网上许多文章说删除hexo文章时，先在source文件夹下删掉相应的md文件，再执行hexo g。这时很多人会发现文章还是存在，于是又有人说要执行hexo clean。我试了之后发现，千万不要在_post文件夹中没有文件时执行hexo clean！！！这样做会使你的整个博客404！！！  解决方案如果已经执行了而且真">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/24/关于删除hexo个人博客文章时的坑/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>关于删除hexo个人博客文章时的坑 | 罐头的编程工作室</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">罐头的编程工作室</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">行动 洞察 整合</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/24/关于删除hexo个人博客文章时的坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Skitar">
+      <meta itemprop="description" content="官方认证扯犊子杂学家">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="罐头的编程工作室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关于删除hexo个人博客文章时的坑
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-24 10:43:55 / 修改时间：11:49:50" itemprop="dateCreated datePublished" datetime="2019-07-24T10:43:55+08:00">2019-07-24</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="记录一个删除hexo博文时的坑"><a href="#记录一个删除hexo博文时的坑" class="headerlink" title="记录一个删除hexo博文时的坑"></a>记录一个删除hexo博文时的坑</h1><h2 id="别在source文件夹为空时执行hexo-clean"><a href="#别在source文件夹为空时执行hexo-clean" class="headerlink" title="别在source文件夹为空时执行hexo clean"></a>别在source文件夹为空时执行hexo clean</h2><p>网上许多文章说删除hexo文章时，先在source文件夹下删掉相应的md文件，再执行hexo g。<br>这时很多人会发现文章还是存在，于是又有人说要执行hexo clean。<br>我试了之后发现，<br><strong><em>千万不要在_post文件夹中没有文件时执行hexo clean！！！这样做会使你的整个博客404！！！</em></strong></p>
+<hr>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="如果已经执行了而且真的404了怎么办？"><a href="#如果已经执行了而且真的404了怎么办？" class="headerlink" title="如果已经执行了而且真的404了怎么办？"></a>如果已经执行了而且真的404了怎么办？</h3><p>不用重新搭建博客！只需要把文件夹结构恢复至初始结构就行了，我当时给source文件夹下重新添加了_post文件夹，然后用hexo new重新发一篇新的文章，再hexo g就好了。</p>
+<h3 id="正确的清空文章姿势"><a href="#正确的清空文章姿势" class="headerlink" title="正确的清空文章姿势"></a>正确的清空文章姿势</h3><p>原则是<strong>_post文件夹不能为空</strong>，所以主要有以下几种方法：</p>
+<ol>
+<li>等到下一篇文章创建后再删除之前的</li>
+<li>直接删除原文章的标题和内容，但不要删除文件，等想要写下一篇时在这个文件上改</li>
+<li>给文章设置隐藏。请参考博文：<a href="http://blog.fiftykg.com/hexo/hexo%E9%A6%96%E9%A1%B5%E9%9A%90%E8%97%8F%E9%83%A8%E5%88%86%E6%96%87%E7%AB%A0.html" target="_blank" rel="noopener">hexo首页隐藏部分文章</a></li>
+</ol>
+<hr>
+<h2 id="出错原因"><a href="#出错原因" class="headerlink" title="出错原因"></a>出错原因</h2><p>最后来总结一下原理。</p>
+<h3 id="首先，hexo-g执行后为什么文章仍然存在？"><a href="#首先，hexo-g执行后为什么文章仍然存在？" class="headerlink" title="首先，hexo g执行后为什么文章仍然存在？"></a>首先，hexo g执行后为什么文章仍然存在？</h3><p>在<a href="https://hexo.io/zh-cn/docs/commands" target="_blank" rel="noopener">hexo官方文档</a>中，说明了g（generate）指令是生成静态网页的指令。且在<a href="https://hexo.io/zh-cn/docs/generating" target="_blank" rel="noopener">生成文件</a>的说明中指出，g指令将比对原有文件，有变动的文件才会更新。我尝试之后发现，g指令没有任何问题，问题出在hexo d！推送到远端后，远端的文章没有被删除，这才是根源。</p>
+<h3 id="那么hexo-clean后为何造成网站崩溃呢？"><a href="#那么hexo-clean后为何造成网站崩溃呢？" class="headerlink" title="那么hexo clean后为何造成网站崩溃呢？"></a>那么hexo clean后为何造成网站崩溃呢？</h3><p>仍旧查看<a href="https://hexo.io/zh-cn/docs/commands" target="_blank" rel="noopener">hexo官方文档</a>，hexo clean是一条用于“清除缓存文件 (db.json) 和已生成的静态文件 (public)”的指令。public文件夹下存放的是hexo g后生成的静态网站，其中有一个代表博客主页的index.html，而该网站的生成需要有至少一个_post文件夹下的文章。如果_post文件夹下是空的，在hexo clean后hexo g，会因为找不到publish文件夹下的index.html而404。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/个人博客/" rel="tag"># 个人博客</a>
+          
+            <a href="/tags/踩坑记录/" rel="tag"># 踩坑记录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/22/简单的计算机硬件原型特点小结/" rel="next" title="简单的计算机硬件原型特点小结">
+                <i class="fa fa-chevron-left"></i> 简单的计算机硬件原型特点小结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/27/C-中srand-及rand的最简单用法浅析/" rel="prev" title="C++中srand()及rand()的最简单用法浅析">
+                C++中srand()及rand()的最简单用法浅析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Skitar">
+  
+  <p class="site-author-name" itemprop="name">Skitar</p>
+  <div class="site-description motion-element" itemprop="description">官方认证扯犊子杂学家</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Skitar99" title="GitHub &rarr; https://github.com/Skitar99" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#记录一个删除hexo博文时的坑"><span class="nav-number">1.</span> <span class="nav-text">记录一个删除hexo博文时的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#别在source文件夹为空时执行hexo-clean"><span class="nav-number">1.1.</span> <span class="nav-text">别在source文件夹为空时执行hexo clean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">1.2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如果已经执行了而且真的404了怎么办？"><span class="nav-number">1.2.1.</span> <span class="nav-text">如果已经执行了而且真的404了怎么办？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确的清空文章姿势"><span class="nav-number">1.2.2.</span> <span class="nav-text">正确的清空文章姿势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出错原因"><span class="nav-number">1.3.</span> <span class="nav-text">出错原因</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先，hexo-g执行后为什么文章仍然存在？"><span class="nav-number">1.3.1.</span> <span class="nav-text">首先，hexo g执行后为什么文章仍然存在？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#那么hexo-clean后为何造成网站崩溃呢？"><span class="nav-number">1.3.2.</span> <span class="nav-text">那么hexo clean后为何造成网站崩溃呢？</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-circle-blank"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Skitar</span>
+
+  
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+-->
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
